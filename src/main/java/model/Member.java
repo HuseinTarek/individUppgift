@@ -1,10 +1,11 @@
 package model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "members")
+
 public class Member {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,6 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
-
 
     public Member() {
     }

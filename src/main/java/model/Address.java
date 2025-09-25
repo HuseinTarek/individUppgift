@@ -1,6 +1,7 @@
 package model;
 
 import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Address {
     @Column(name = "city", nullable = false)
     private String city;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address",cascade = CascadeType.ALL)
     private List<Member> members = new ArrayList<>();
 
     public Address() {

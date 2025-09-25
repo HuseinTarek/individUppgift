@@ -1,11 +1,15 @@
 package service;
 
 import dao.MemberDao;
-import org.springframework.transaction.annotation.Transactional;
+import model.Address;
 import model.Member;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
+@Service
 public class MemberService {
     private final MemberDao dao;
 
@@ -17,4 +21,39 @@ public class MemberService {
     public List<Member> findAllWithAddresses() {
         return dao.findAllWithAddresses();
     }
+
+    @Transactional(readOnly=true)
+    public List<Member> findByAddress(Address address) {
+        return dao.findByAddress(address);
+    }
+
+    @Transactional(readOnly = true)
+    public Member findById(Long id,Member member) {
+        return dao.findById(id,member);
+    }
+
+    @Transactional
+    public Member create(Member m){
+        return dao.create(m);
+    }
+
+    @Transactional
+    public Member update(Long id,Member member) {
+        Member updated = dao.findById(id,member);
+        if (updated == null) return null;
+        return updated;
+    }
+
+    @Transactional
+    public Member patch(Long id, Map<String, String> fields) {
+        Member updated=dao.patch(id,fields);
+        if(updated == null) return null;
+        return updated;
 }
+
+    @Transactional
+    public boolean delete(Long id) {
+        return dao.delete(id);
+    }
+    }
+
