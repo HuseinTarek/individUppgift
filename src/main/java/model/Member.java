@@ -23,7 +23,6 @@ public class Member {
     @Column(name = "date_of_birth", nullable = false,unique = true)
     private LocalDate dateOfBirth;
     @Column(name = "roll", nullable = false)
-    private Roll roll;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
@@ -84,12 +83,8 @@ public class Member {
         this.address = address;
     }
 
-    public Roll getRoll() {
-        return roll;
-    }
 
-    public void setRoll(Roll roll) {
-        this.roll = roll;
-    }
+
+
 
    }
