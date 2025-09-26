@@ -49,7 +49,7 @@ public class MemberDao {
     }
 
 
-                public Member findById (Long id,Member member){
+                public Member findById (Long id){
                     return em.find(Member.class, id );
                 }
 

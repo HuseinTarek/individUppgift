@@ -5,7 +5,6 @@ import model.Address;
 import model.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +27,8 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member findById(Long id,Member member) {
-        return dao.findById(id,member);
+    public Member findById(Long id) {
+        return dao.findById(id);
     }
 
     @Transactional
@@ -39,7 +38,7 @@ public class MemberService {
 
     @Transactional
     public Member update(Long id,Member member) {
-        Member updated = dao.findById(id,member);
+        Member updated = dao.findById(id);
         if (updated == null) return null;
         return updated;
     }
