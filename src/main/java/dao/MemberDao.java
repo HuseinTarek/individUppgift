@@ -61,7 +61,6 @@ public class MemberDao {
                     member.setEmail(fields.get("email"));
                     member.setPhone(fields.get("phone"));
                     return member;
-
                 }
 
                 public boolean delete (Long id){

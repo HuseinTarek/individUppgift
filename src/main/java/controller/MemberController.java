@@ -2,11 +2,14 @@ package controller;
 
 import model.Member;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.MemberService;
 
 @RestController
 @RequestMapping("/mypages/members")
+@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+
 public class MemberController {
 private final MemberService service;
 

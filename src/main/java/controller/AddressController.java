@@ -2,12 +2,15 @@ package controller;
 
 import model.Address;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.AddressService;
 import java.net.URI;
 
 @RestController
 @RequestMapping("/mypages/addresses")
+@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+
 public class AddressController {
 
     private final AddressService service;
@@ -24,16 +27,10 @@ public class AddressController {
         return ResponseEntity.ok(address);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Address>> addresses() {
-//        List<Address> addresses = service.findAll();
-//        return ResponseEntity.ok(addresses);
-//    }
-
     @PostMapping
     public ResponseEntity<Address> createAddress(@RequestBody Address address) {
         Address created = service.create(address);
-        URI location = URI.create("/mypages/members/" + created.getId());
+        URI location = URI.create("/mypages/addresses/" + created.getId());
         return ResponseEntity.created(location).body(created);
     }
 }

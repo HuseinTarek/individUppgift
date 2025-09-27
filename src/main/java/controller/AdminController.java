@@ -4,6 +4,7 @@ package controller;
 import model.Address;
 import model.Member;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.MemberService;
 import java.net.URI;
@@ -12,6 +13,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/members")
+@PreAuthorize("hasRole('ADMIN')")  // Säkerhet för admin-endpoints
+
 public class AdminController {
 
     private final MemberService service;
