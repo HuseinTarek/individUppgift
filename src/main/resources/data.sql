@@ -29,6 +29,6 @@ INSERT INTO address (street, postal_code, city) VALUES
 INSERT INTO members (first_name, last_name, email, phone, date_of_birth, role, address_id) VALUES
                                                                                                ('Carl', 'Carlsson', 'carl@example.com', '0708765432', '1988-03-15', 'USER', 1),
                                                                                                ('Diana', 'Eriksson', 'diana@example.com', '0709876543', '1992-07-22', 'USER', 2),
-                                                                                               ('Erik', 'Larsson', 'erik@example.com', '0701098765', '1987-11-08', 'ADMIN', 2),
-                                                                                               ('Frida', 'Nilsson', 'frida@example.com', '0702109876', '1995-02-14', 'USER', 3),
-                                                                                               ('Gustav', 'Petersson', 'gustav@example.com', '0703210987', '1983-09-03', 'ADMIN', 4);
+                                                                                               ('Erik', 'Larsson', 'erik@example.com', '0701098765', '1987-11-08', 'ADMIN', 3),
+                                                                                               ('Frida', 'Nilsson', 'frida@example.com', '0702109876', '1995-02-14', 'USER', 4),
+                                                                                               ('Gustav', 'Petersson', 'gustav@example.com', '0703210987', '1983-09-03', 'ADMIN', 5);

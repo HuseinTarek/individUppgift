@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -25,6 +26,7 @@ public class Member {
 
     @ManyToOne
     @JoinColumn(name = "address_id")
+    @JsonBackReference
     private Address address;
 
 
