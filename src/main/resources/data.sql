@@ -15,7 +15,7 @@ CREATE TABLE members (
                          email VARCHAR(255) NOT NULL,
                          phone VARCHAR(50),
                          date_of_birth DATE NOT NULL,
-                         roll VARCHAR(50) NOT NULL,
+                         role VARCHAR(50) NOT NULL,
                          address_id BIGINT,
                          FOREIGN KEY (address_id) REFERENCES address(id)
 );
@@ -26,7 +26,7 @@ INSERT INTO address (street, postal_code, city) VALUES
                                                     ('987 Maple Dr', '66666', 'Örebro'),
                                                     ('147 Cedar Way', '77777', 'Linköping');
 
-INSERT INTO members (first_name, last_name, email, phone, date_of_birth, roll, address_id) VALUES
+INSERT INTO members (first_name, last_name, email, phone, date_of_birth, role, address_id) VALUES
                                                                                                ('Carl', 'Carlsson', 'carl@example.com', '0708765432', '1988-03-15', 'USER', 1),
                                                                                                ('Diana', 'Eriksson', 'diana@example.com', '0709876543', '1992-07-22', 'USER', 2),
                                                                                                ('Erik', 'Larsson', 'erik@example.com', '0701098765', '1987-11-08', 'ADMIN', 2),

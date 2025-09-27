@@ -8,7 +8,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mypages/members")
+@RequestMapping("/mypages/addresses")
 public class AddressController {
 
     private final AddressService service;
@@ -17,7 +17,7 @@ public class AddressController {
         this.service = service;
     }
 
-    @GetMapping("/{addressId}")
+    @GetMapping("/{id}")
     public ResponseEntity<Address> getAddress(@PathVariable Long id) {
         Address address = service.findById(id);
         if(address == null)
