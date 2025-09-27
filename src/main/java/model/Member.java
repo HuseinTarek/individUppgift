@@ -1,6 +1,7 @@
 package model;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -23,10 +24,17 @@ public class Member {
     @Column(name = "date_of_birth", nullable = false,unique = true)
     private LocalDate dateOfBirth;
     @Column(name = "roll", nullable = false)
+    private Role roll;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
+
 
     public Member() {
     }
@@ -83,8 +91,12 @@ public class Member {
         this.address = address;
     }
 
+    public Role getRoll() {
+        return roll;
+    }
 
-
-
+    public void setRoll(Role roll) {
+        this.roll = roll;
+    }
 
    }

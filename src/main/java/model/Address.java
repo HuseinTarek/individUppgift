@@ -1,7 +1,6 @@
 package model;
 
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.util.ArrayList;
 import java.util.List;

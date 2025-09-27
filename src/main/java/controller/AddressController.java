@@ -17,7 +17,7 @@ public class AddressController {
         this.service = service;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{addressId}")
     public ResponseEntity<Address> getAddress(@PathVariable Long id) {
         Address address = service.findById(id);
         if(address == null)
@@ -25,11 +25,11 @@ public class AddressController {
         return ResponseEntity.ok(address);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Address>> addresses() {
-        List<Address> addresses = service.findAll();
-        return ResponseEntity.ok(addresses);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<Address>> addresses() {
+//        List<Address> addresses = service.findAll();
+//        return ResponseEntity.ok(addresses);
+//    }
 
     @PostMapping
     public ResponseEntity<Address> createAddress(@RequestBody Address address) {
