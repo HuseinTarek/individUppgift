@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ public class Address {
     private String city;
 
     @OneToMany(mappedBy = "address",cascade = CascadeType.ALL)
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonIgnore
     private List<Member> members = new ArrayList<>();
 
     public Address() {
