@@ -24,6 +24,9 @@ public class MemberService {
         return dao.findAllWithAddresses();
     }
 
+
+
+
     @Transactional(readOnly=true)
     public List<Member> findByAddress(Address address) {
         return dao.findByAddress(address);
@@ -96,5 +99,10 @@ public class MemberService {
     public boolean delete(Long id) {
         return dao.delete(id);
     }
+
+    @Transactional
+    public List<Member> findAll() {
+        return dao.findAll();
     }
+}
 

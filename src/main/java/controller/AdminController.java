@@ -23,11 +23,23 @@ public class AdminController {
         this.service = service;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Member>> members(Address address) {
-        List<Member> members = service.findByAddress(address);
+    //getting all members
+    @GetMapping  // GET /admin/members
+    public ResponseEntity<List<Member>> getAllMembers() {
+        List<Member> members = service.findAll();
         return ResponseEntity.ok(members);
     }
+
+    // get all members in the same address
+    @GetMapping("/address/{addressId}")
+    public ResponseEntity<List<Member>> getMembersByAddress(@PathVariable Long addressId) {
+        List<Member> members = service.findAllWithAddresses();
+        if (members.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(members);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Member> getMemberById(@PathVariable Long id, @RequestParam(required = false) boolean withAddress) {

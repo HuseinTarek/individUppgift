@@ -19,6 +19,10 @@ public class MemberDao {
                 .getResultList();
     }
 
+    public List<Member> findAll() {
+        return em.createQuery("SELECT m FROM Member m",Member.class).getResultList();
+    }
+
     public List<Member> findByAddress(Address address) {
         return em.createQuery("SELECT m FROM Member m WHERE m.address = :address", Member.class)
                 .setParameter("address", address)
