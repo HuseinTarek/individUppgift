@@ -24,9 +24,6 @@ public class MemberService {
         return dao.findAllWithAddresses();
     }
 
-
-
-
     @Transactional(readOnly=true)
     public List<Member> findByAddress(Address address) {
         return dao.findByAddress(address);
@@ -77,11 +74,9 @@ public class MemberService {
 
     @Transactional
     public Member patch(Long id, Map<String, String> fields) {
-        // Find the existing member
         Member updated = dao.findById(id);
         if (updated == null) return null;
 
-        // Apply only the fields that were provided
         fields.forEach((key, value) -> {
             switch (key) {
                 case "firstName":
@@ -104,7 +99,6 @@ public class MemberService {
                         updated.setDateOfBirth(LocalDate.parse(value));
                     }
                     break;
-                // Add other fields as needed
             }
         });
         return updated;
