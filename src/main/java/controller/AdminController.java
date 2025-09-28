@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/members")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 
 public class AdminController {
 
@@ -41,7 +41,6 @@ public class AdminController {
     }
 
 
-    //getting all members
     @GetMapping("/{id}")
     public ResponseEntity<Member> getMemberById(@PathVariable Long id, @RequestParam(required = false) boolean withAddress) {
         Member member;
@@ -65,11 +64,33 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Member> patchMember(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        Member updated = service.patch(id, body);
-        if(updated == null) 
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(updated);
+    public ResponseEntity<Member> patchMember(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        try {
+            // Flatten the nested address object if present
+            Map<String, String> flatUpdates = new java.util.HashMap<>();
+            updates.forEach((key, value) -> {
+                if (value instanceof Map) {
+                    // Handle nested address object
+                    if ("address".equals(key)) {
+                        Map<?, ?> addressMap = (Map<?, ?>) value;
+                        addressMap.forEach((addressKey, addressValue) -> {
+                            if (addressValue != null) {
+                                flatUpdates.put("address." + addressKey, addressValue.toString());
+                            }
+                        });
+                    }
+                } else if (value != null) {
+                    flatUpdates.put(key, value.toString());
+                }
+            });
+            
+            Member updated = service.patch(id, flatUpdates);
+            if(updated == null) 
+                return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(updated);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping

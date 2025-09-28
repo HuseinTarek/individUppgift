@@ -72,4 +72,8 @@ public class MemberDao {
                     em.remove(member);
                     return true;
                 }
-            }
+
+    public Member save(Member updated) {
+        return em.merge(updated);
+    }
+}

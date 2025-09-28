@@ -73,35 +73,58 @@ public class MemberService {
     }
 
     @Transactional
-    public Member patch(Long id, Map<String, String> fields) {
-        Member updated = dao.findById(id);
-        if (updated == null) return null;
+    public Member patch(Long id, Map<String, String> updates) {
+        Member member = dao.findById(id);
+        if (member == null) {
+            return null;
+        }
 
-        fields.forEach((key, value) -> {
-            switch (key) {
-                case "firstName":
-                    updated.setFirstName(value);
+        // Update member fields
+        updates.forEach((key, value) -> {
+            if (value == null) return;
+            
+            switch (key.toLowerCase()) {
+                case "firstname":
+                    member.setFirstName(value);
                     break;
-                case "lastName":
-                    updated.setLastName(value);
+                case "lastname":
+                    member.setLastName(value);
                     break;
                 case "email":
-                    updated.setEmail(value);
+                    member.setEmail(value);
                     break;
-                case "phone":
-                    updated.setPhone(value);
+                case "phonenumber":
+                    member.setPhone(value);
+                    break;
+                // Handle nested address fields
+                case "address.street":
+                    if (member.getAddress() == null) {
+                        member.setAddress(new Address());
+                    }
+                    member.getAddress().setStreet(value);
+                    break;
+                case "address.city":
+                    if (member.getAddress() == null) {
+                        member.setAddress(new Address());
+                    }
+                    member.getAddress().setCity(value);
+                    break;
+                case "address.postalcode":
+                    if (member.getAddress() == null) {
+                        member.setAddress(new Address());
+                    }
+                    member.getAddress().setPostalCode(value);
                     break;
                 case "role":
-                    updated.setRole(Role.valueOf(value));
+                    member.setRole(Role.valueOf(value.toUpperCase()));
                     break;
-                case "dateOfBirth":
-                    if (value != null) {
-                        updated.setDateOfBirth(LocalDate.parse(value));
-                    }
+                case "dateofbirth":
+                    member.setDateOfBirth(LocalDate.parse(value));
                     break;
             }
         });
-        return updated;
+
+        return dao.update(member);
     }
 
     @Transactional

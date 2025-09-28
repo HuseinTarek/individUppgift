@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/mypages/members")
-@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+@PreAuthorize("hasRole('USER')")
 
 public class MemberController {
 private final MemberService service;
