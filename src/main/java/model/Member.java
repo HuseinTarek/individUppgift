@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -24,16 +25,13 @@ public class Member {
     @Column(name = "date_of_birth", nullable = false,unique = true)
     private LocalDate dateOfBirth;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "address_id")
-    @JsonBackReference
+    @JsonIgnoreProperties("members")
     private Address address;
-
-
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
-
 
     public Member() {
     }

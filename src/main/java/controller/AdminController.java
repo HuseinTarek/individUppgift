@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/members")
-@PreAuthorize("hasRole('ADMIN')")  // Säkerhet för admin-endpoints
+@PreAuthorize("hasRole('ADMIN')")
 
 public class AdminController {
 
@@ -24,7 +24,7 @@ public class AdminController {
     }
 
     //getting all members
-    @GetMapping  // GET /admin/members
+    @GetMapping
     public ResponseEntity<List<Member>> getAllMembers() {
         List<Member> members = service.findAll();
         return ResponseEntity.ok(members);
@@ -41,6 +41,7 @@ public class AdminController {
     }
 
 
+    //getting all members
     @GetMapping("/{id}")
     public ResponseEntity<Member> getMemberById(@PathVariable Long id, @RequestParam(required = false) boolean withAddress) {
         Member member;
@@ -53,6 +54,7 @@ public class AdminController {
         if(member==null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(member);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Member> updateMember(@PathVariable Long id, @RequestBody Member member) {

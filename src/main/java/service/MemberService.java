@@ -44,17 +44,35 @@ public class MemberService {
 
     @Transactional
     public Member update(Long id, Member member) {
-        Member updated = dao.findById(id);
-        if (updated == null) return null;
+        // First, load the existing member with its address
+        Member existing = dao.findById(id);
+        if (existing == null) return null;
 
-        // ✅ Update the fields from the incoming member object
-        updated.setFirstName(member.getFirstName());
-        updated.setLastName(member.getLastName());
-        updated.setEmail(member.getEmail());
-        updated.setPhone(member.getPhone());
-        updated.setDateOfBirth(member.getDateOfBirth());
-        updated.setRole(member.getRole());
-        return updated;
+        // Update the fields from the incoming member object
+        existing.setFirstName(member.getFirstName());
+        existing.setLastName(member.getLastName());
+        existing.setEmail(member.getEmail());
+        existing.setPhone(member.getPhone());
+        existing.setDateOfBirth(member.getDateOfBirth());
+        existing.setRole(member.getRole());
+        
+        // Handle address update
+        if (member.getAddress() != null) {
+            // If the member already has an address, update its fields
+            if (existing.getAddress() != null && member.getAddress().getId() != null) {
+                Address existingAddress = existing.getAddress();
+                Address newAddress = member.getAddress();
+                existingAddress.setStreet(newAddress.getStreet());
+                existingAddress.setPostalCode(newAddress.getPostalCode());
+                existingAddress.setCity(newAddress.getCity());
+            } else {
+                // If no existing address or new address has no ID, set the new address
+                existing.setAddress(member.getAddress());
+            }
+        }
+        
+        // Save and return the updated member
+        return dao.update(existing);
     }
 
     @Transactional
@@ -89,11 +107,8 @@ public class MemberService {
                 // Add other fields as needed
             }
         });
-
-        // No need to call dao.save() - automatic persistence with @Transactional
         return updated;
     }
-
 
     @Transactional
     public boolean delete(Long id) {

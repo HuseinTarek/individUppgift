@@ -2,6 +2,7 @@ package dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import model.Address;
 import model.Member;
 import org.springframework.stereotype.Repository;
@@ -34,22 +35,20 @@ public class MemberDao {
         return m;
     }
 
-    public Member update(Long id, Member updatedMember) {
-        Member existing = em.find(Member.class, id);
-        if (existing == null) return null;
-
-        if (updatedMember.getFirstName() != null) {
-            existing.setFirstName(updatedMember.getFirstName());
-
-            if (updatedMember.getEmail() != null) {
-                existing.setEmail(updatedMember.getEmail());
-
-                if (updatedMember.getAddress() != null) {
-                    existing.setAddress(updatedMember.getAddress());
-                }
-            }
+    public Member update(Member member) {
+        // First merge the member to ensure it's managed
+        Member mergedMember = em.merge(member);
+        
+        // If the member has an address, make sure it's also managed
+        if (mergedMember.getAddress() != null && mergedMember.getAddress().getId() == null) {
+            // If the address is new, persist it first
+            em.persist(mergedMember.getAddress());
+        } else if (mergedMember.getAddress() != null) {
+            // If the address exists, merge it
+            em.merge(mergedMember.getAddress());
         }
-        return existing;
+        
+        return mergedMember;
     }
 
 
